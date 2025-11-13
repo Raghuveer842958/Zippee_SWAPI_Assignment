@@ -5,32 +5,30 @@ import { cn } from "@/lib/utils";
 
 interface CharacterCardProps {
   name: string;
-  species: string[];
+  gender?: string;
+  birthYear: string;
   onClick: () => void;
 }
 
-const speciesColors: Record<string, string> = {
-  Human: "from-blue-400 to-blue-600",
-  Droid: "from-yellow-300 to-yellow-500",
-  Wookiee: "from-red-500 to-red-700",
-  // add more species-color gradients here
+const genderColors: Record<string, string> = {
+  male: "from-blue-400 to-blue-600",
+  female: "from-pink-400 to-pink-600",
+  unknown: "from-gray-400 to-gray-500",
+  "n/a": "from-gray-400 to-gray-500",
 };
 
-const getBackgroundGradient = (speciesList: string[]) => {
-  for (const species of speciesList) {
-    if (speciesColors[species]) {
-      return speciesColors[species];
-    }
-  }
-  return "from-gray-300 to-gray-400";
+const getBackgroundGradient = (gender?: string): string => {
+  if (!gender) return genderColors["unknown"];
+  return genderColors[gender.toLowerCase()] || genderColors["unknown"];
 };
 
 export const CharacterCard: React.FC<CharacterCardProps> = ({
   name,
-  species,
+  gender,
+  birthYear,
   onClick,
 }) => {
-  const gradient = getBackgroundGradient(species);
+  const gradient = getBackgroundGradient(gender);
   const randomImageUrl = `https://picsum.photos/seed/${encodeURIComponent(
     name
   )}/200/200`;
@@ -63,7 +61,12 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
       <CardContent>
         <h3 className="text-xl font-semibold mb-1">{name}</h3>
         <p className="text-gray-600">
-          {species.join(", ") || "Unknown species"}
+          Gender:{" "}
+          {gender
+            ? gender.charAt(0).toUpperCase() + gender.slice(1)
+            : "Unknown"}{" "}
+          <br />
+          Birth Year: {birthYear}
         </p>
       </CardContent>
       <CardFooter>
@@ -71,6 +74,6 @@ export const CharacterCard: React.FC<CharacterCardProps> = ({
           View Details
         </Button>
       </CardFooter>
-    </Card>
-  );
+    </Card>
+  );
 };

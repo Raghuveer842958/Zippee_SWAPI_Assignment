@@ -9,7 +9,7 @@ export interface Character {
   homeworld: string;
   films: string[];
   url: string;
-  [key: string]: any; // for other dynamic props
+  [key: string]: any;
 }
 
 interface UseFetchCharactersResult {
@@ -21,7 +21,7 @@ interface UseFetchCharactersResult {
   goToPage: (page: number) => void;
 }
 
-const PAGE_SIZE = 10; // SWAPI returns 10 per page
+const PAGE_SIZE = 10;
 
 export function useFetchCharacters(): UseFetchCharactersResult {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -44,7 +44,7 @@ export function useFetchCharacters(): UseFetchCharactersResult {
         }
         const data = await response.json();
 
-        setCharacters(data.results); // array of characters
+        setCharacters(data.results);
         const count = data.count;
         setTotalPages(Math.ceil(count / PAGE_SIZE));
       } catch (e: any) {

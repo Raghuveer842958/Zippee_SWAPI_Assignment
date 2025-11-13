@@ -1,60 +1,15 @@
-// import React, { useState } from "react";
-
-// interface LoginProps {
-//   onLogin: (username: string, password: string) => boolean;
-// }
-
-// const Login: React.FC<LoginProps> = ({ onLogin }) => {
-//   const [username, setUsername] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [error, setError] = useState("");
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!onLogin(username, password)) {
-//       setError("Invalid username or password");
-//     }
-//   };
-
-//   return (
-//     <form
-//       onSubmit={handleSubmit}
-//       className="max-w-sm mx-auto mt-10 p-4 border rounded"
-//     >
-//       <h2 className="text-xl font-semibold mb-4">Login</h2>
-//       {error && <p className="text-red-600">{error}</p>}
-//       <input
-//         type="text"
-//         placeholder="Username"
-//         value={username}
-//         onChange={(e) => setUsername(e.target.value)}
-//         className="w-full mb-3 p-2 border rounded"
-//         required
-//       />
-//       <input
-//         type="password"
-//         placeholder="Password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//         className="w-full mb-4 p-2 border rounded"
-//         required
-//       />
-//       <button
-//         type="submit"
-//         className="w-full bg-blue-600 text-white py-2 rounded"
-//       >
-//         Login
-//       </button>
-//     </form>
-//   );
-// };
-
-// export default Login;
-
-// -----------------------------------------------------------------------
-
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface LoginProps {
   onLogin: (username: string, password: string) => boolean;
@@ -80,36 +35,52 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-sm mx-auto mt-10 p-4 border rounded"
-      noValidate
-    >
-      <h2 className="text-xl font-semibold mb-4">Login</h2>
-      {error && <p className="text-red-600">{error}</p>}
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="w-full mb-3 p-2 border rounded"
-        required
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full mb-4 p-2 border rounded"
-        required
-      />
-      <button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded"
-      >
-        Login
-      </button>
-    </form>
+    <div className="flex min-h-screen items-center justify-center bg-muted">
+      <Card className="w-full max-w-sm shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-center text-2xl">Login</CardTitle>
+        </CardHeader>
+        <form onSubmit={handleSubmit} noValidate>
+          <CardContent className="flex flex-col gap-4">
+            {error && (
+              <div className="text-red-600 text-sm text-center">{error}</div>
+            )}
+            <div>
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                autoFocus
+              />
+            </div>
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </CardContent>
+          <CardFooter>
+            <Button
+              type="submit"
+              className="w-full border border black"
+              variant="accent"
+            >
+              Login
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+    </div>
   );
 };
 

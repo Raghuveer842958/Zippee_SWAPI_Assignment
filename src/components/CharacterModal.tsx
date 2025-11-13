@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Character } from "../hooks/useFetchCharacters";
 import { Button } from "./ui/button";
+import { LoadingSpinner } from "./LoadingSpinner";
+// import { LoadingSpinner } from "./LoadingSpinner";
 
 interface CharacterModalProps {
   character: Character;
   onClose: () => void;
 }
 
-// Helper to fetch homeworld details from SWAPI
 const fetchHomeworld = async (url: string) => {
   const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch homeworld");
@@ -45,10 +46,10 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-lg w-full p-6 relative overflow-auto max-h-[90vh]">
+      <div className="bg-white dark:bg-gray-900 rounded-lg max-w-lg w-full p-6 relative overflow-auto max-h-[90vh] text-gray-900 dark:text-gray-100 shadow-lg">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-900 text-3xl font-bold"
+          className="absolute top-3 right-3 text-gray-500 hover:text-gray-900 dark:hover:text-white text-3xl font-bold"
           aria-label="Close"
         >
           &times;
@@ -56,11 +57,9 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
         <h2 className="text-2xl font-bold mb-4">{character.name}</h2>
 
         {loading ? (
-          <p className="text-center text-gray-500">
-            Loading homeworld details...
-          </p>
+          <LoadingSpinner />
         ) : error ? (
-          <p className="text-red-600">Error: {error}</p>
+          <p className="text-red-600 dark:text-red-400">Error: {error}</p>
         ) : (
           <>
             <p>
@@ -81,7 +80,7 @@ const CharacterModal: React.FC<CharacterModalProps> = ({
             </p>
 
             {homeworld && (
-              <div className="mt-4 bg-gray-50 p-3 rounded border border-gray-200">
+              <div className="mt-4 bg-gray-50 dark:bg-gray-800 p-3 rounded border border-gray-200 dark:border-gray-700">
                 <h3 className="font-semibold mb-1">Homeworld Details:</h3>
                 <p>Name: {homeworld.name}</p>
                 <p>Terrain: {homeworld.terrain}</p>
